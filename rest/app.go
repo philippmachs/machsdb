@@ -2,13 +2,12 @@ package rest
 
 import (
 	"github.com/gorilla/mux"
-	"time"
-	"net/http"
-	"log"
-	"io"
 	"github.com/philippmachs/machsdb/db"
+	"io"
+	"log"
+	"net/http"
+	"time"
 )
-
 
 type App struct {
 	initialized bool

@@ -1,8 +1,8 @@
 package db
 
 import (
-	"log"
 	"io"
+	"log"
 	"os"
 	"time"
 )
@@ -40,12 +40,12 @@ func (l *logger) Set(key string, value interface{}, expire time.Duration) (*Valu
 	return result, err
 }
 func (l *logger) Get(key string) (*Value, error) {
-	defer l.peekIntoPanic("get", key, )
+	defer l.peekIntoPanic("get", key)
 	result, err := l.Cache.Get(key)
 	l.infoLog.Println("get", key, "=>", result, err)
 	return result, err
 }
-func (l *logger) Remove(key string) (error) {
+func (l *logger) Remove(key string) error {
 	defer l.peekIntoPanic("remove", key)
 	err := l.Cache.Remove(key)
 	l.infoLog.Println("remove", key, "=>", err)

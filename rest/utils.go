@@ -1,11 +1,11 @@
 package rest
 
 import (
-	"net/http"
 	"encoding/json"
-	"time"
 	"errors"
 	"io"
+	"net/http"
+	"time"
 )
 
 type wrapper func(fn http.HandlerFunc) http.HandlerFunc
@@ -37,7 +37,7 @@ func processTTL(in string) (ttl time.Duration, err error) {
 	}
 
 	ttl, err = time.ParseDuration(in)
-	if err != nil{
+	if err != nil {
 		err = ErrMalformedDuration
 	}
 	return

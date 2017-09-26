@@ -1,17 +1,17 @@
 package db
 
 import (
-	"testing"
 	"reflect"
 	"sort"
+	"testing"
 )
 
 func TestStore_GetByIndex(t *testing.T) {
 	store := newStore()
-	_, _ = store.Set("string", "String",0)
-	_, _ = store.Set("list", []interface{}{"One", "Two", "Three"},0)
-	_, _ = store.Set("list2", []interface{}{"One", "Two", "Three"},0)
-	_, _ = store.Set("map", map[string]interface{}{"One": "42", "Two": ""},0)
+	_, _ = store.Set("string", "String", 0)
+	_, _ = store.Set("list", []interface{}{"One", "Two", "Three"}, 0)
+	_, _ = store.Set("list2", []interface{}{"One", "Two", "Three"}, 0)
+	_, _ = store.Set("map", map[string]interface{}{"One": "42", "Two": ""}, 0)
 
 	var tests = []struct {
 		key           string
@@ -81,7 +81,7 @@ func TestStore_keys(t *testing.T) {
 	expected := []string{"str", "list", "map"}
 	sort.Strings(result)
 	sort.Strings(expected)
-	if !reflect.DeepEqual(result, expected){
+	if !reflect.DeepEqual(result, expected) {
 		t.Errorf("TestStore_keys expected %v, got %v", expected, result)
 	}
 }
@@ -153,7 +153,7 @@ func TestStore_set(t *testing.T) {
 		{"map", map[string]interface{}{"a": "str", "b": 1}, &Value{Type: MAP, Data: map[string]interface{}{"a": "str", "b": 1}}, nil},
 		{"err", struct{}{}, nil, ErrInvalidValueType},
 		{"nil", nil, nil, ErrInvalidValueType},
-		{"wrongMap", map[int]int{1:42}, nil, ErrInvalidValueType},
+		{"wrongMap", map[int]int{1: 42}, nil, ErrInvalidValueType},
 	}
 
 	for _, tt := range tests {

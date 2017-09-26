@@ -24,7 +24,6 @@ func auth(a Authorizer) wrapper {
 				return
 			}
 			fn(w, r)
-
 		}
 	}
 }

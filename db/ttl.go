@@ -1,8 +1,8 @@
 package db
 
 import (
-	"time"
 	"errors"
+	"time"
 )
 
 type ttl struct {
@@ -12,7 +12,6 @@ type ttl struct {
 }
 
 var ErrInvalidTTL = errors.New("TTL should be positive")
-
 
 func newTtl(target Cache, defaultTtl time.Duration) (*ttl, error) {
 	if defaultTtl < 0 {
@@ -26,7 +25,6 @@ func newTtl(target Cache, defaultTtl time.Duration) (*ttl, error) {
 	return ttl, nil
 }
 
-
 func (t *ttl) Get(key string) (*Value, error) {
 	result, err := t.Cache.Get(key)
 	if err != nil {
@@ -37,7 +35,6 @@ func (t *ttl) Get(key string) (*Value, error) {
 	}
 	return result, err
 }
-
 
 func (t *ttl) Set(key string, value interface{}, expire time.Duration) (*Value, error) {
 

@@ -1,13 +1,13 @@
 package db
 
 import (
-	"time"
-	"sync"
-	"io"
-	"encoding/json"
 	"bufio"
+	"encoding/json"
 	"errors"
+	"io"
 	"log"
+	"sync"
+	"time"
 )
 
 var ErrUnknownOperationType = errors.New("Unknown operation type")
@@ -143,7 +143,7 @@ func (p *persister) Set(key string, value interface{}, expire time.Duration) (*V
 	return result, err
 }
 
-func (p *persister) Remove(key string) (error) {
+func (p *persister) Remove(key string) error {
 	err := p.Cache.Remove(key)
 	if err == nil {
 		p.op <- operation{"Remove", key, nil, 0}

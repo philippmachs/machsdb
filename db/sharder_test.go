@@ -1,10 +1,10 @@
 package db
 
 import (
-	"testing"
 	"math/rand"
-	"sort"
 	"reflect"
+	"sort"
+	"testing"
 )
 
 const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -37,7 +37,7 @@ func TestShard_Keys(t *testing.T) {
 	}
 
 	sort.Strings(uniqueKeys)
-	for _, n := range (tests) {
+	for _, n := range tests {
 		sharder, _ := newSharder(n, nil)
 		done := make(chan bool, len(keys))
 		for i := range keys {
@@ -46,7 +46,7 @@ func TestShard_Keys(t *testing.T) {
 				done <- true
 			}(i)
 		}
-		for i:= 0; i < len(keys); i++ {
+		for i := 0; i < len(keys); i++ {
 			<-done
 		}
 		close(done)
@@ -56,8 +56,7 @@ func TestShard_Keys(t *testing.T) {
 		}
 		sort.Strings(actualKeys)
 		if !reflect.DeepEqual(actualKeys, uniqueKeys) {
-			t.Errorf("Keys and actual Keys do not match", actualKeys, uniqueKeys)
+			t.Error("keys and actual Keys do not match", actualKeys, uniqueKeys)
 		}
 	}
 }
-

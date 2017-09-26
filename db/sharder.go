@@ -1,8 +1,8 @@
 package db
 
 import (
-	"hash/fnv"
 	"errors"
+	"hash/fnv"
 	"sync"
 	"time"
 )
@@ -18,6 +18,7 @@ type sharder struct {
 	shards   []Cache
 	locks    []sync.RWMutex
 }
+
 //Shard wraps around
 func Shard(function shardFunction, needLock bool, caches ...Cache) (s Cache, err error) {
 	n := len(caches)
@@ -60,9 +61,7 @@ func (s *sharder) getTargetShardIdx(key string) uint32 {
 	if len(s.shards) == 1 {
 		return 0
 	}
-
-	target := s.fn(key) % uint32(len(s.shards))
-	return target
+	return s.fn(key) % uint32(len(s.shards))
 }
 
 func defaultHash(key string) uint32 {
@@ -80,10 +79,12 @@ func (s *sharder) Set(key string, value interface{}, expire time.Duration) (*Val
 	return s.shards[i].Set(key, value, expire)
 }
 
-func (s *sharder) Remove(key string) (error) {
+func (s *sharder) Remove(key string) error {
 	i := s.getTargetShardIdx(key)
-	s.locks[i].Lock()
-	defer s.locks[i].Unlock()
+	if s.needLock {
+		s.locks[i].Lock()
+		defer s.locks[i].Unlock()
+	}
 	return s.shards[i].Remove(key)
 }
 
@@ -117,7 +118,7 @@ func (s *sharder) Keys() ([]string, error) {
 				s.locks[i].RLock()
 			}
 			keys, err := s.shards[i].Keys()
-			if s.needLock{
+			if s.needLock {
 				s.locks[i].RUnlock()
 			}
 

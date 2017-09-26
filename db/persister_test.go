@@ -1,9 +1,9 @@
 package db
 
 import (
+	"bytes"
 	"testing"
 	"time"
-	"bytes"
 )
 
 var sample = `{"Type":"Set","k":"foo","v":"bar","e":0}
@@ -33,18 +33,18 @@ func TestPersister_Read(t *testing.T) {
 	if err != nil {
 		t.Errorf("TestPersister_Read got constructor error %v", err)
 	}
-	time.Sleep(1*time.Millisecond)
+	time.Sleep(1 * time.Millisecond)
 	foo, err := p.Get("foo")
 	if err != nil {
 		t.Errorf("TestPersister_Read got unexpected error %v", err)
 		return
 	}
-	if foo.Data != "bar"{
-		t.Errorf("TestPersister_Read .Get(foo) expected bar, got %v",foo.Data)
+	if foo.Data != "bar" {
+		t.Errorf("TestPersister_Read .Get(foo) expected bar, got %v", foo.Data)
 	}
 }
 
-func TestPersister_ReadWrite(t *testing.T){
+func TestPersister_ReadWrite(t *testing.T) {
 	store := newStore()
 	rw := bytes.Buffer{}
 	rw.Write([]byte(sample))
@@ -52,16 +52,15 @@ func TestPersister_ReadWrite(t *testing.T){
 	if err != nil {
 		t.Errorf("TestPersister_Read got constructor error %v", err)
 	}
-	time.Sleep(1*time.Millisecond)
+	time.Sleep(1 * time.Millisecond)
 	p.Set("new_foo", "new_bar", 0)
 	p.Set("new_test", []interface{}{1, 2, 3}, 0)
 	time.Sleep(1 * time.Millisecond)
 	expected := `{"Type":"Set","k":"new_foo","v":"new_bar","e":0}
 {"Type":"Set","k":"new_test","v":[1,2,3],"e":0}
 ` //Only new values here
-	if rw.String() != expected{
+	if rw.String() != expected {
 		t.Errorf("TestPersister_ReadWrite expected %v, \ngot %v", expected, rw.String())
 	}
-
 
 }

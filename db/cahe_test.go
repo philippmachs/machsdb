@@ -1,9 +1,9 @@
 package db
 
 import (
-	"time"
-	"testing"
 	"strconv"
+	"testing"
+	"time"
 )
 
 func getRandomLists(n int, l int) map[string][]int {
@@ -25,8 +25,8 @@ func TestCache_Concurrency(t *testing.T) {
 	items := getRandomLists(500, 10)
 	done := make(chan bool)
 
-	for a := 0; a < 100; a++{
-		for k, v := range (items) {
+	for a := 0; a < 100; a++ {
+		for k, v := range items {
 			go func(key string, value []int) {
 				c.Set(key, value, 0)
 				done <- true
@@ -48,7 +48,7 @@ func TestCache_Concurrency(t *testing.T) {
 		}
 	}
 
-	for i := 0; i < len(items) * 4 * 100; i++{
+	for i := 0; i < len(items)*4*100; i++ {
 		<-done
 	}
 

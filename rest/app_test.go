@@ -1,14 +1,14 @@
 package rest
 
 import (
-	"testing"
-	"net/http"
-	"net/http/httptest"
-	"io"
 	"bytes"
 	"encoding/json"
-	"sort"
+	"io"
+	"net/http"
+	"net/http/httptest"
 	"reflect"
+	"sort"
+	"testing"
 )
 
 func executeRequest(a *App, r *http.Request) *httptest.ResponseRecorder {

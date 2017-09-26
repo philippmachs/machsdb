@@ -1,9 +1,9 @@
 package db
 
 import (
-	"time"
 	"errors"
 	"io"
+	"time"
 )
 
 type Cache interface {

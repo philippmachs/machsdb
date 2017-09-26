@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/philippmachs/machsdb/db"
+	"github.com/philippmachs/machsdb/rest"
 	"math/rand"
 	"os"
-	"github.com/philippmachs/machsdb/rest"
-	"github.com/philippmachs/machsdb/db"
 )
 
 const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"

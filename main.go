@@ -2,11 +2,11 @@ package main
 
 import (
 	"flag"
-	"os"
+	"github.com/philippmachs/machsdb/rest"
 	"io"
 	"log"
+	"os"
 	"time"
-	"github.com/philippmachs/machsdb/rest"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 	app := rest.App{}
 
 	if *login != "" && *password != "" {
-		app.Authorization = &rest.BasicAuthorizer{*login, *password}
+		app.Authorization = &rest.BasicAuthorizer{Username: *login, Password: *password}
 	}
 
 	var rw io.ReadWriteCloser

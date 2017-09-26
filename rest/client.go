@@ -1,13 +1,13 @@
 package rest
 
 import (
-	"time"
-	"net/http"
-	"encoding/json"
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/philippmachs/machsdb/db"
+	"net/http"
+	"time"
 )
 
 type AppError struct {
@@ -150,7 +150,6 @@ func (c *Client) setHeaders(r *http.Request) {
 		r.SetBasicAuth(c.login, c.password)
 	}
 }
-
 
 func extractError(resp *http.Response, decoder *json.Decoder) error {
 	if resp.StatusCode == http.StatusBadRequest {
