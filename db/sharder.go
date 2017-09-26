@@ -91,8 +91,8 @@ func (s *sharder) Remove(key string) error {
 func (s *sharder) Get(key string) (*Value, error) {
 	i := s.getTargetShardIdx(key)
 	if s.needLock {
-		s.locks[i].Lock()
-		defer s.locks[i].Unlock()
+		s.locks[i].RLock()
+		defer s.locks[i].RUnlock()
 	}
 	return s.shards[i].Get(key)
 }
