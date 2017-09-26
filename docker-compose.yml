@@ -1,0 +1,7 @@
+cache:
+  image: kv_cache
+  ports:
+  - "${PORT}:8080"
+  volumes:
+  - ${SYNC_DIR}:/data/
+  command: " ./cache ${ADDR} ${TTL} ${FILE} ${SAVE_FREQ} ${LOG} ${N_SHARDS} ${LOGIN} ${PASSWORD} ${R_TIMEOUT} ${W_TIMEOUT}"
