@@ -95,8 +95,12 @@ REST API, таймаут соединения и логин/пароль для 
 ```
 go get -u github.com/philippmachs/machsdb
 ```
-На примере приложения example/server
-1. Выполнить команду go build /examples/server/server.go
+На примере main
+1. Выполнить go run main.go
+2. Использовать REST API на localhost:8080
+
+Либо
+1. Выполнить команду go build main.go
 2. Запустить полученный файл
 3. Использовать REST API на localhost:8080
 4. Доступные флаги и значения по умолчанию можно посмотреть, выполнив файл с флагом -h

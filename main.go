@@ -7,7 +7,23 @@ import (
 	"log"
 	"time"
 	"github.com/philippmachs/machsdb/rest"
+	"math/rand"
+	"strconv"
 )
+
+const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+func getRandomStrings(n int, l int) []string {
+	result := make([]string, n)
+	for i := 0; i < n; i++ {
+		b := make([]byte, l)
+		for j := range b {
+			b[j] = letters[rand.Intn(len(letters))]
+		}
+		result[i] = string(b)
+	}
+	return result
+}
 
 func main() {
 	addr := flag.String("addr", ":8080", "http server address")
@@ -70,5 +86,15 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	app.Run(*addr, *readTimeout, *writeTimeout)
+	doneCh := make(chan bool)
+	go func(){
+		app.Run(*addr, *readTimeout, *writeTimeout)
+		doneCh <- true
+	}()
+
+
+	for i, str := range getRandomStrings(250000, 8) {
+		go app.Cache.Set(strconv.Itoa(i), str, 0)
+	}
+	<-doneCh
 }
