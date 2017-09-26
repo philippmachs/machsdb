@@ -84,7 +84,7 @@ func (p *persister) consumeOplog() {
 	}
 }
 
-func (p *persister) persistOplog(frequency time.Duration) {
+func (p *persister) writeOplogEvery(frequency time.Duration) {
 	for {
 		<-time.After(frequency)
 		p.writeOplog(p.grabOplog())
@@ -130,7 +130,7 @@ func newPersister(target Cache, srcDst io.ReadWriter, writeFrequency time.Durati
 	go p.consumeOplog()
 
 	if srcDst != nil {
-		go p.persistOplog(writeFrequency)
+		go p.writeOplogEvery(writeFrequency)
 	}
 	return p, nil
 }
